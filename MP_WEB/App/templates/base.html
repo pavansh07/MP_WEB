@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mathematical Programming{% endblock %}</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background: #f4f4f9; /* Light background color */
+            color: #333; /* Dark text color */
+            text-align: center;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: #ffffff; /* White background */
+            padding: 30px;
+            border-radius: 15px; /* Rounded corners */
+            border: 2px solid #333; /* Dark border */
+            max-width: 600px;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .container:hover {
+            transform: scale(1.05); /* Slightly increase size on hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif; /* Georgia font for heading */
+            letter-spacing: 1px;
+            font-weight: 500; /* Medium weight */
+        }
+        p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #333; /* Dark background */
+            color: #ffffff; /* White text */
+            border-radius: 20px; /* Rounded buttons */
+            font-size: 0.9rem;
+            font-weight: 600; /* Bold text */
+            transition: background 0.3s, transform 0.2s;
+        }
+        .buttons a:hover {
+            background: #555; /* Darker on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 10px;
+            border: 1px solid #333; /* Dark border */
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-control:focus {
+            border-color: #555; /* Slightly lighter on focus */
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on focus */
+            outline: none;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-primary {
+            background-color: #333;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: #555;
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background-color: #4caf50;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background-color: #388e3c;
+            transform: translateY(-2px);
+        }
+        .btn-danger {
+            background-color: #f44336;
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background-color: #d32f2f;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        // Function to display elements with a fade-in effect
+        function fadeInElements(elements, delay) {
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.opacity = 1; // Fade in
+                    element.style.transform = 'translateY(0)'; // Move to original position
+                }, index * delay); // Delay based on index
+            });
+        }
+
+        // Wait for the DOM to load before executing
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.container, .buttons a, p');
+            fadeInElements(elements, 200);
+        });
+    </script>
+</body>
+</html>

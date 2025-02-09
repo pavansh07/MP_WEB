@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Solve Problem (Simplex Method){% endblock %}
+
+{% block content %}
+<h1>Solve Problem (Simplex Method)</h1>
+<p>Enter the details below to solve a linear programming problem using the Simplex Method.</p>
+
+<div class="container">
+    <form method="post" action="{% url 'simplex_solve' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="type">Optimization Type:</label>
+            <select id="type" name="type" class="form-control">
+                <option value="maximize">Maximize</option>
+                <option value="minimize">Minimize</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="variables">Number of Variables:</label>
+            <input type="number" id="variables" name="variables" class="form-control" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="constraints_count">Number of Constraints:</label>
+            <input type="number" id="constraints_count" name="constraints_count" class="form-control" min="1" required>
+        </div>
+
+        <button type="button" class="btn btn-info" onclick="generateFields()">Generate</button>
+
+        <div class="form-group">
+            <label for="objective">Objective Function (ensure space b/w variables):</label>
+            <input type="text" id="objective" name="objective" class="form-control" placeholder="e.g: 1 2 3" required>
+        </div>
+
+        <h3>Constraints</h3>
+        <div id="constraints"></div>
+
+        <br><br>
+        <button type="submit" class="btn btn-primary">Solve</button>
+    </form>
+
+    <br>
+    <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'simplex_method' %}'">Back</button>
+</div>
+
+<script>
+    function generateFields() {
+        generateConstraints();
+    }
+
+    function generateConstraints() {
+        const constraintsDiv = document.getElementById('constraints');
+        constraintsDiv.innerHTML = '';
+        const count = document.getElementById('constraints_count').value;
+        for (let i = 0; i < count; i++) {
+            const newConstraint = document.createElement('div');
+            newConstraint.className = 'constraint form-group';
+            newConstraint.innerHTML = `
+                <label>Constraint ${i + 1}:</label>
+                <input type="text" name="constraints[]" class="form-control" placeholder="e.g: 1 2 3" required>
+            `;
+            constraintsDiv.appendChild(newConstraint);
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Graphical Method Result{% endblock %}
+
+{% block content %}
+<h1>Graphical Method Result</h1>
+
+{% if error %}
+    <div class="alert alert-danger">
+        <p><strong>Error:</strong> {{ error }}</p>
+    </div>
+{% endif %}
+
+{% if no_solution %}
+    <div class="alert alert-danger">
+        <p><strong>Error:</strong> {{ solution_message }}</p>
+    </div>
+{% else %}
+    <div class="alert alert-success">
+        <p><strong>Optimal Solution Found:</strong></p>
+        <p>x₁ = {{ x1_opt }}</p>
+        <p>x₂ = {{ x2_opt }}</p>
+        <p>Objective Value (Z) = {{ objective_value }}</p>
+    </div>
+{% endif %}
+
+<br>
+<button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'graphical_method' %}'">Back</button>
+
+{% if not no_solution %}
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="data:image/png;base64,{{ graph }}" alt="Graphical Solution" style="max-width: 100%; height: auto;">
+    </div>
+{% endif %}
+{% endblock %}

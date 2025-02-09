@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Solve Problem (Graphical Method){% endblock %}
+
+{% block content %}
+<h1>Solve Problem (Graphical Method)</h1>
+<p>Enter the details below. The graphical method only works for problems with two variables.</p>
+
+<div class="container">
+    {% if error %}
+        <div class="alert alert-danger">
+            <p><strong>Error:</strong> {{ error }}</p>
+        </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'graphical_solve' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="opt_type">Optimization Type:</label>
+            <select id="opt_type" name="opt_type" class="form-control">
+                <option value="maximize">Maximize</option>
+                <option value="minimize">Minimize</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="constraints_count">Number of Constraints:</label>
+            <input type="number" id="constraints_count" name="constraints_count" class="form-control" min="1" required>
+        </div>
+
+        <button type="button" class="btn btn-info" onclick="generateFields()">Generate</button>
+
+        <div class="form-group">
+            <label for="objective">Objective Function Coefficients (c₁ c₂):</label>
+            <input type="text" id="objective" name="objective" class="form-control" placeholder="e.g., 3 5" required>
+        </div>
+
+        <h3>Constraints</h3>
+        <div id="constraints"></div>
+
+        <br><br>
+        <button type="submit" class="btn btn-primary">Plot Graph</button>
+    </form>
+
+    <br>
+    <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'graphical_method' %}'">Back</button>
+</div>
+
+<script>
+    function generateFields() {
+        generateConstraints();
+    }
+
+    function generateConstraints() {
+        const constraintsDiv = document.getElementById('constraints');
+        constraintsDiv.innerHTML = '';
+        const count = document.getElementById('constraints_count').value;
+        for (let i = 0; i < count; i++) {
+            const newConstraint = document.createElement('div');
+            newConstraint.className = 'constraint form-group';
+            newConstraint.innerHTML = `
+                <label>Constraint ${i + 1} Coefficients and RHS (a₁ a₂ b):</label>
+                <input type="text" name="constraints[]" class="form-control" placeholder="e.g., 1 2 20" required>
+            `;
+            constraintsDiv.appendChild(newConstraint);
+        }
+    }
+</script>
+{% endblock %}
